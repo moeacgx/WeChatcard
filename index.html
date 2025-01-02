@@ -24,6 +24,7 @@
 
         window.onload = function() {
             const targetUrl = "https://bing.com"; // 目标链接
+            console.log("User Agent:", navigator.userAgent); // 输出用户代理字符串
 
             if (isWeChat() || isQQ() || isDouyin() || isWeibo()) {
                 // 如果是特定应用内置浏览器，显示提示和复制链接按钮
