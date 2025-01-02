@@ -26,6 +26,9 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        #content {
+            display: none; /* 初始隐藏内容 */
+        }
     </style>
     <script>
         // 判断是否为指定的浏览器
@@ -49,18 +52,33 @@
         window.onload = function() {
             const warnMessage = document.getElementById('warn-message');
             const copyButton = document.getElementById('copyButton');
+            const content = document.getElementById('content');
             const targetUrl = "https://bing.com"; // 目标链接
 
-            // 如果是微信、QQ、抖音或微博内置浏览器
             if (isWeChat() || isQQ() || isDouyin() || isWeibo()) {
-                // 显示提示和复制链接按钮
+                // 如果是微信、QQ、抖音或微博内置浏览器，显示提示和复制链接按钮
                 warnMessage.innerHTML = "<p>请在浏览器中打开此链接。</p>";
                 warnMessage.style.display = 'block';
                 copyButton.style.display = 'block';
-            } 
-
-            // 直接跳转到目标链接
-            window.location.href = targetUrl;
+            } else {
+                // 在浏览器中动态加载目标内容
+                fetch(targetUrl)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text(); // 获取目标内容
+                        }
+                        throw new Error('网络错误');
+                    })
+                    .then(html => {
+                        content.innerHTML = html; // 将目标内容插入到页面中
+                        content.style.display = 'block'; // 显示内容
+                    })
+                    .catch(error => {
+                        console.error('加载失败:', error);
+                        warnMessage.innerHTML = "<p>加载目标内容失败，请稍后再试。</p>";
+                        warnMessage.style.display = 'block';
+                    });
+            }
 
             // 复制链接功能
             copyButton.onclick = function() {
@@ -77,5 +95,6 @@
 <body>
     <div id="warn-message" style="display:none;"></div>
     <button id="copyButton">复制链接</button>
+    <div id="content"></div> <!-- 用于显示目标内容 -->
 </body>
 </html>
