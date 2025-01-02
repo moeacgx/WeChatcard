@@ -15,6 +15,18 @@
     <meta property="og:description" content="大笨蛋描述描述">
     <meta property="og:image" content="https://dd-static.jd.com/ddimgp/jfs/t20260206/261620/1/6784/50053/6776217eF450995f4/60943df862e5972d.png">
     <link rel="shortcut icon" href="https://dd-static.jd.com/ddimgp/jfs/t20260206/261620/1/6784/50053/6776217eF450995f4/60943df862e5972d.png">
+    <style>
+        #copyButton {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
     <script>
         // 判断是否为指定的浏览器
         function isWeChat() {
@@ -34,32 +46,42 @@
         }
 
         function isAppleBrowser() {
-            // 判断是否为iOS设备上的Safari或其他苹果内置浏览器
             return /iPhone|iPad|iPod/i.test(navigator.userAgent) && /AppleWebKit/i.test(navigator.userAgent);
         }
 
         // 进行判断并执行相应操作
         window.onload = function() {
             const warnMessage = document.getElementById('warn-message');
+            const copyButton = document.getElementById('copyButton');
             const targetUrl = "https://bing.com"; // 目标链接
 
             if (isWeChat() || isQQ() || isDouyin() || isWeibo()) {
-                // 如果是微信、QQ、抖音或微博内置浏览器，跳转到目标连接
-                window.location.href = targetUrl;
+                // 如果是微信、QQ、抖音或微博内置浏览器，显示提示和复制链接按钮
+                warnMessage.innerHTML = "<p>请在浏览器中打开此链接。</p>";
+                warnMessage.style.display = 'block';
+                copyButton.style.display = 'block';
             } else if (isAppleBrowser()) {
                 // 如果是苹果浏览器，显示提示
                 warnMessage.innerHTML = "<p>请分享当前页面到微信、QQ、抖音或微博，使用苹果自带浏览器分享就是卡片。</p>";
                 warnMessage.style.display = 'block';
             } else {
-                // 如果不是指定的浏览器，提示不支持
-                warnMessage.innerHTML = "<p>当前浏览器不支持!</p>";
-                warnMessage.style.display = 'block';
+                // 如果不是指定的浏览器，直接跳转
+                window.location.href = targetUrl;
             }
+
+            copyButton.onclick = function() {
+                navigator.clipboard.writeText(targetUrl).then(() => {
+                    alert("链接已复制到剪贴板，请在浏览器中打开。");
+                }, (err) => {
+                    console.error('复制失败: ', err);
+                });
+            };
         };
     </script>
 </head>
 
 <body>
     <div id="warn-message" style="display:none;"></div>
+    <button id="copyButton">复制链接</button>
 </body>
 </html>
