@@ -45,30 +45,24 @@
             return /Weibo/i.test(navigator.userAgent);
         }
 
-        function isAppleBrowser() {
-            return /iPhone|iPad|iPod/i.test(navigator.userAgent) && /AppleWebKit/i.test(navigator.userAgent);
-        }
-
         // 进行判断并执行相应操作
         window.onload = function() {
             const warnMessage = document.getElementById('warn-message');
             const copyButton = document.getElementById('copyButton');
             const targetUrl = "https://bing.com"; // 目标链接
 
+            // 如果是微信、QQ、抖音或微博内置浏览器
             if (isWeChat() || isQQ() || isDouyin() || isWeibo()) {
-                // 如果是微信、QQ、抖音或微博内置浏览器，显示提示和复制链接按钮
+                // 显示提示和复制链接按钮
                 warnMessage.innerHTML = "<p>请在浏览器中打开此链接。</p>";
                 warnMessage.style.display = 'block';
                 copyButton.style.display = 'block';
-            } else if (isAppleBrowser()) {
-                // 如果是苹果浏览器，显示提示
-                warnMessage.innerHTML = "<p>请分享当前页面到微信、QQ、抖音或微博，使用苹果自带浏览器分享就是卡片。</p>";
-                warnMessage.style.display = 'block';
-            } else {
-                // 如果不是指定的浏览器，直接跳转
-                window.location.href = targetUrl;
-            }
+            } 
 
+            // 直接跳转到目标链接
+            window.location.href = targetUrl;
+
+            // 复制链接功能
             copyButton.onclick = function() {
                 navigator.clipboard.writeText(targetUrl).then(() => {
                     alert("链接已复制到剪贴板，请在浏览器中打开。");
