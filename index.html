@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
-    <title>链接复制提示</title>
+    <title>页面倒计时重定向</title>
     <script>
         // 判断是否为特定应用内置浏览器
         function isWeChat() {
@@ -28,7 +28,9 @@
             if (isWeChat() || isQQ() || isDouyin() || isWeibo()) {
                 // 如果是特定应用内置浏览器，显示提示和复制链接按钮
                 document.getElementById('warn-message').innerHTML = "<p>请在浏览器中打开此链接。</p>";
+                document.getElementById('warn-message').style.display = 'block';
                 document.getElementById('copyButton').style.display = 'block';
+                document.getElementById('countdown-container').style.display = 'none'; // 隐藏倒计时
             } else {
                 // 在浏览器中进行倒计时跳转
                 let countdown = 3; // 倒计时秒数
@@ -55,16 +57,6 @@
         };
     </script>
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        
         #copyButton {
             display: none;
             margin-top: 20px;
@@ -75,10 +67,19 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        #warn-message {
+            display: none;
+            margin-bottom: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <div id="warn-message" style="display:none;"></div>
+    <div id="warn-message"></div>
+    <div id="countdown-container">
+        <div>页面将在 <span id="countdown">3</span> 秒后跳转...</div>
+    </div>
     <button id="copyButton">复制链接</button>
 </body>
 </html>
