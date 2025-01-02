@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="layoutmode" content="standard">
+    <meta name="imagemode" content="force">
+    <meta name="wap-font-scale" content="no">
+    <meta name="format-detection" content="telephone=no">
+    <title>Safari生成分享卡片</title>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="动态的卡片标题">
+    <meta property="og:description" content="动态的卡片描述">
+    <meta property="og:image" content="动态的卡片缩略图">
+    <link rel="shortcut icon" href="网站图标">
+    <script>
+        // 判断是否为指定的浏览器
+        function isWeChat() {
+            return /MicroMessenger/i.test(navigator.userAgent);
+        }
+
+        function isQQ() {
+            return /QQ/i.test(navigator.userAgent);
+        }
+
+        function isDouyin() {
+            return /Douyin/i.test(navigator.userAgent);
+        }
+
+        function isWeibo() {
+            return /Weibo/i.test(navigator.userAgent);
+        }
+
+        function isAppleBrowser() {
+            // 判断是否为iOS设备上的Safari或其他苹果内置浏览器
+            return /iPhone|iPad|iPod/i.test(navigator.userAgent) && /AppleWebKit/i.test(navigator.userAgent);
+        }
+
+        // 进行判断并执行相应操作
+        window.onload = function() {
+            const warnMessage = document.getElementById('warn-message');
+            const targetUrl = "https://your-target-url.com"; // 目标链接
+
+            if (isWeChat() || isQQ() || isDouyin() || isWeibo()) {
+                // 如果是微信、QQ、抖音或微博内置浏览器，跳转到目标连接
+                window.location.href = targetUrl;
+            } else if (isAppleBrowser()) {
+                // 如果是苹果浏览器，显示提示
+                warnMessage.innerHTML = "<p>请分享当前页面到微信、QQ、抖音或微博，使用苹果自带浏览器分享就是卡片。</p>";
+                warnMessage.style.display = 'block';
+            } else {
+                // 如果不是指定的浏览器，提示不支持
+                warnMessage.innerHTML = "<p>当前浏览器不支持!</p>";
+                warnMessage.style.display = 'block';
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <div id="warn-message" style="display:none;"></div>
+</body>
+</html>
