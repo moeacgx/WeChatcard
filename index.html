@@ -1,87 +1,37 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
-    <title>页面倒计时重定向</title>
-    <script>
-        // 判断是否为特定应用内置浏览器
-        function isWeChat() {
-            return /MicroMessenger/i.test(navigator.userAgent);
-        }
-
-        function isQQ() {
-            return /QQ/i.test(navigator.userAgent);
-        }
-
-        function isDouyin() {
-            return /Douyin/i.test(navigator.userAgent);
-        }
-
-        function isWeibo() {
-            return /Weibo/i.test(navigator.userAgent);
-        }
-
-        window.onload = function() {
-            const targetUrl = "https://bing.com"; // 目标链接
-            console.log("User Agent:", navigator.userAgent); // 输出用户代理字符串
-
-            if (isWeChat() || isQQ() || isDouyin() || isWeibo()) {
-                // 如果是特定应用内置浏览器，显示提示和复制链接按钮
-                document.getElementById('warn-message').innerHTML = "<p>请在浏览器中打开此链接。</p>";
-                document.getElementById('warn-message').style.display = 'block';
-                document.getElementById('copyButton').style.display = 'block';
-                document.getElementById('countdown-container').style.display = 'none'; // 隐藏倒计时
-            } else {
-                // 在浏览器中进行倒计时跳转
-                let countdown = 3; // 倒计时秒数
-                const countdownDisplay = document.getElementById('countdown');
-
-                const interval = setInterval(() => {
-                    countdownDisplay.innerText = countdown;
-                    countdown--;
-                    if (countdown < 0) {
-                        clearInterval(interval);
-                        window.location.href = targetUrl; // 进行重定向
-                    }
-                }, 1000);
-            }
-
-            // 复制当前页面链接功能
-            document.getElementById('copyButton').onclick = function() {
-                navigator.clipboard.writeText(window.location.href).then(() => {
-                    alert("当前页面链接已复制到剪贴板，请在浏览器中打开。");
-                }, (err) => {
-                    console.error('复制失败: ', err);
-                });
-            };
-        };
-    </script>
-    <style>
-        #copyButton {
-            display: none;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #warn-message {
-            display: none;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>站长仓库 | VPSBBQ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0d0d0d, #009688);
+      font-family: 'Noto Sans', sans-serif;
+    }
+    .neon-text {
+      color: white;
+      text-shadow: 0 0 5px #00e6e6, 0 0 10px #00e6e6, 0 0 20px #00e6e6;
+    }
+    .dashed-line {
+      border-top: 2px dashed white;
+      width: 60%;
+      margin: 1rem auto;
+    }
+    .cat-icon {
+      font-size: 3rem;
+    }
+  </style>
 </head>
-<body>
-    <div id="warn-message"></div>
-    <div id="countdown-container">
-        <div>页面将在 <span id="countdown">3</span> 秒后跳转...</div>
+<body class="flex flex-col items-center justify-center min-h-screen">
+  <div class="text-center">
+    <h1 class="text-5xl font-bold neon-text">站长仓库</h1>
+    <div class="dashed-line"></div>
+    <div class="flex items-center justify-center space-x-2 mt-4">
+      <span class="text-xl text-white font-light">VPSBBQ</span>
+      <span class="cat-icon">📦</span>
     </div>
-    <button id="copyButton">复制链接</button>
+  </div>
 </body>
 </html>
-
